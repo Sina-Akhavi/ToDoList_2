@@ -4,11 +4,20 @@ const url = 'http://localhost:3000';
 
 export default {
     async list() {
-        // console.log('salam');
         const response = await axios.get(`${url}/todo`);
-        console.log(response.data);
 
         return response.data;
+    },
+
+    async addTodo(todo) {
+        const response = await axios.post(`${url}/todo`, todo);
+
+        // console.log(response);
+        return response.data;
+    },
+
+    async delete(id) {
+        await axios.delete(`${url}/todo/${id}`);
     }
 }
 

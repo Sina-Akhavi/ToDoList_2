@@ -1,8 +1,7 @@
 <template>
   <h2>To Do list</h2>
 
-
-  <ListItems :list="list"/>
+  <ListItems/>
   
   
 
@@ -21,16 +20,6 @@
     components: {
       ListItems
     },
-
-    data() {
-      return {
-        list: []
-      }
-    },
-
-    async created() {
-      this.list = await toDoService.list();
-    }
 
   }
 </script>
