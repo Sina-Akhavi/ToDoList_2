@@ -1,13 +1,20 @@
 <template>
 
   <AddItems @submit="submit"/>
-
-  <div v-if="loading">loading...</div>
-  <ul v-else>
-    <li v-for="item of list" :key="item.id">
-      {{ item.text }} <button @click="doDestroy(item.id)">&times;</button>
-    </li>
-  </ul>
+  <div>
+    <el-table v-loading="loading" 
+      element-loading-text="Loading..."
+      :element-loading-spinner="svg"
+      :data="list" style="width: 100%">
+      <el-table-column prop="id" label="Id" width="250" />
+      <el-table-column prop="text" label="Text" width="250" />
+      <el-table-column fixed="right" width="120">
+        <template #default="scope">
+          <el-button type="danger" size="small" @click="doDestroy(scope.row.id)">&times;</el-button>
+        </template>
+      </el-table-column>
+  </el-table>
+  </div>
 
 </template>
 

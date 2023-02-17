@@ -25,5 +25,10 @@
 </script>
 
 
-<style scoped>
+<style>
+
+body {
+  padding: 24px;  
+}
+
 </style>

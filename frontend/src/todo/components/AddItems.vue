@@ -1,8 +1,14 @@
 <template>
-  
-    <input type="text" name="" v-model="todo.text">
-    <button type="submit" v-on:click="doSubmit"> Add Item</button>
-  
+  <el-form :inline="true" :rules="rules" ref="formRef" :model="todo" 
+    @submit.native.prevent="doSubmit('formRef')">
+
+    <el-form-item label="Todo" :required="true" prop="text">
+      <el-input v-model="todo.text"></el-input>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" native-type="submit">Submit</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 
@@ -14,16 +20,41 @@
 
     data() {
       return {
+        rules: {
+
+          text: [
+            {
+              required: true,
+              message: 'This field can not be empty'
+            },
+            { 
+              min: 2,
+              max: 255,
+              message: 'The legth is too short/long'
+            }
+          ]
+        },
+
         todo: {
           text: ''
         }
       }
+
     },
 
     methods: {
-      doSubmit() {
+      async doSubmit(formRef) {
+        
+        try {
+          await this.$refs[formRef].validate();
+          
+        } catch (error) {
+          console.error(error);
+          return;
+        }
+        
         this.$emit('submit', {...this.todo});
-        this.todo.text = '';
+        await this.$refs[formRef].resetFields();
       }
     }
   }

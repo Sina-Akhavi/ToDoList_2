@@ -1,12 +1,16 @@
 {
   "todo": [
     {
-      "text": "note for English IELTS",
+      "text": "divide dinner first",
       "id": 4
     },
     {
-      "text": "complete frontend using ElementPlus",
+      "text": "when you wake up, start making tea",
       "id": 5
+    },
+    {
+      "text": "grab cake, apple, lunch for university",
+      "id": 6
     }
   ]
 }
