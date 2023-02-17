@@ -1,6 +1,6 @@
 <template>
 
-  <AddItems @submit="submit"/>
+   <AddItems/> <!-- deleted submit  -->
   <div>
     <el-table v-loading="loading" 
       element-loading-text="Loading..."
@@ -10,52 +10,63 @@
       <el-table-column prop="text" label="Text" width="250" />
       <el-table-column fixed="right" width="120">
         <template #default="scope">
-          <el-button type="danger" size="small" @click="doDestroy(scope.row.id)">&times;</el-button>
+          <el-button type="danger" size="small" 
+            @click="doDestroy(scope.row.id)">&times;
+          </el-button>
         </template>
       </el-table-column>
-  </el-table>
+    </el-table>
   </div>
 
 </template>
 
 
 <script>
-import AddItems from './AddItems.vue'
-import toDoService from '../toDoService'
+import AddItems from './AddItems.vue';
+// import toDoService from '../toDoService';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'ListIems',
   
-  data() {
-    return {
-      list: [],
-      loading: false
-    }
-  },
-
-  async created() {
-    this.list = await toDoService.list();
-  },
-
   components: {
     AddItems
   },
 
+  async created() {
+    this.doList();
+  },
+  
+  computed: {
+    ...mapGetters({
+      loading: 'todo/loading',
+      list: 'todo/list'
+    })
+  },
+    
   methods: {
-      async submit(todo) {
-        this.loading = !this.loading;
-        const data = await toDoService.addTodo(todo);
-        this.list = await toDoService.list();
-        this.loading = !this.loading;
-      },
+    ...mapActions({
+      doList: 'todo/doList',
+      doDestroy: 'todo/doDestroy'
+    }),
 
-      async doDestroy(id) {
-        this.loading = !this.loading;
-        const data = await toDoService.delete(id);
-        this.list = await toDoService.list();
-        this.loading = !this.loading;
 
-      }
+    // async submit(todo) {
+    //   this.loading = !this.loading;
+    //   const data = await toDoService.addTodo(todo);
+    //   this.doList();
+    //   // this.list = await toDoService.list();
+    //   // this.loading = !this.loading;
+
+    // },
+
+    // async doDestroy(id) {
+    //   this.loading = !this.loading;
+    //   const data = await toDoService.delete(id);
+
+    //   this.doList();
+
+    // }
   }
 
 }

@@ -13,10 +13,12 @@
 
 
 <script>
+  import { mapActions } from 'vuex';
+
   export default {
     name: 'AddItems',
 
-    emits: ['submit'],
+    // emits: ['submit'],
 
     data() {
       return {
@@ -43,6 +45,10 @@
     },
 
     methods: {
+      ...mapActions({
+        doCreate: 'todo/doCreate'
+      }),
+
       async doSubmit(formRef) {
         
         try {
@@ -53,7 +59,7 @@
           return;
         }
         
-        this.$emit('submit', {...this.todo});
+        this.doCreate({...this.todo});
         await this.$refs[formRef].resetFields();
       }
     }

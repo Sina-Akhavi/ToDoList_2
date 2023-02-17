@@ -11,8 +11,6 @@ export default {
 
     async addTodo(todo) {
         const response = await axios.post(`${url}/todo`, todo);
-
-        // console.log(response);
         return response.data;
     },
 
